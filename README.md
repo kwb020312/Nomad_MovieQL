@@ -7,3 +7,19 @@
 본 저장소는 강의 특성에 맞게 Client 와 Server 로 구분되어있음
 
 이전 Axios, Fetch가 아닌 GraphQL로 필요한 정보만을 받아와 영화소개 페이지를 만들어보고 싶어서 해당 저장소를 만들게되었음
+
+### :running: GraphQL Yoga
+
+GraphQL 서버를 생성하는 경우 GraphQL Yoga 라이브러리를 사용하면 매우 간편하게 서버를 생성할 수 있으며,
+
+```javascript
+import { GraphQLServer } from "graphql-yoga";
+
+export const server = new GraphQLServer({
+  // 스키마를 전달해야함
+});
+
+server.start(() => console.log("GraphQL Server Running!!"));
+```
+
+위의 코드만으로 이미 서버는 생성되었으나 인자의 값으로 스키마를 넘겨주어야함
