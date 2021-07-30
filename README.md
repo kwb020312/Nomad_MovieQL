@@ -24,7 +24,7 @@ server.start(() => console.log("GraphQL Server Running!!"));
 
 위의 코드만으로 이미 서버는 생성되었으나 인자의 값으로 스키마를 넘겨주어야함
 
-### :squirrel: Apollo Client
+### :earth_asia: Apollo Client
 
 ApolloClient 에서 백엔드로 가기 전 요청을 추가적으로 넣을 수 있는데 이는 resolvers 에 객체의 형태로 데이터를 전달하면 반영할 수 있음
 
