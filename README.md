@@ -23,3 +23,60 @@ server.start(() => console.log("GraphQL Server Running!!"));
 ```
 
 위의 코드만으로 이미 서버는 생성되었으나 인자의 값으로 스키마를 넘겨주어야함
+
+### :squirrel: Apollo Client
+
+ApolloClient 에서 백엔드로 가기 전 요청을 추가적으로 넣을 수 있는데 이는 resolvers 에 객체의 형태로 데이터를 전달하면 반영할 수 있음
+
+```javascript
+import ApolloClient from "apollo-boost";
+
+export const client = new ApolloClient({
+  uri: "http://localhost:4000/",
+  resolvers: {
+    // Type을 Movie로 갖는 쿼리의 isLiked = false 데이터를 삽입함
+    Movie: {
+      isLiked: () => false,
+    },
+    // Mutation을 새로 추가
+    Mutation: {
+      toggleLikeMovie: (_, { id, isLiked }, { cache }) => {
+        // cache데이터로 해당 데이터를 추가함
+        cache.writeData({
+          id: `Movie:${id}`,
+          data: {
+            isLiked: !isLiked,
+          },
+        });
+      },
+    },
+  },
+});
+```
+
+이렇게 추가된 데이터를 요청할 때 프론트엔드 에서 지켜야 할 문법이 있다.
+
+```javascript
+const LIKE_MOVIE = gql`
+  mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
+    // 이와 같이 서버에는 없는 명령의 경우 코드 입력 후 @client 를 달아 client에서 찾을 내용이라고 선언해주어야 함
+    toggleLikeMovie(id: $id, isLiked: $isLiked) @client
+  }
+`;
+```
+
+### :sparkles: Main Page
+
+<img src="./gitImages\MainPage.jpg">
+
+### :cat: Detail Page
+
+<img src=".\gitImages\DetailPage.jpg">
+
+### :thumbsup: Like Button
+
+<img src=".\gitImages\LikeButton.jpg">
+
+### :v: If Clicked Like Button
+
+<img src=".\gitImages\Liked Movie.jpg">
